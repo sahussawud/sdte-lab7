@@ -4,3 +4,43 @@
     copy:
       src: site/
       dest: /var/www/default
+
+- hosts: host01
+  tasks:
+  - name: "Replace content in HTML host01"
+    become: yes
+    become_user: root
+    replace: 
+      path: //var/www/default/index.html
+      regexp: 'site'
+      replace: 'host01'
+      backup: yes
+
+- hosts: host02
+  tasks:
+  - name: "Replace content in HTML host01"
+    become: yes
+    become_user: root
+    replace: 
+      path: //var/www/default/index.html
+      regexp: 'site'
+      replace: 'host02'
+      backup: yes 
+
+- hosts: host03
+  tasks:
+  - name: "Replace content in HTML host01"
+    become: yes
+    become_user: root
+    replace: 
+      path: //var/www/default/index.html
+      regexp: 'site'
+      replace: 'host03'
+      backup: yes 
+
+- hosts: web
+  tasks:
+  - name: restart nginx
+    service:
+      name: nginx
+      state: restarted
